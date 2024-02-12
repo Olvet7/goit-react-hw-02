@@ -1,6 +1,6 @@
 import css from "../Options/Options.module.css"
 
-const Options = ({ onClick}) => {
+const Options = ( {onClick, resetFeedback, totalFeedback} ) => {
   return (
     <ul className={css.list}>
       <li className={css.item}>
@@ -12,6 +12,9 @@ const Options = ({ onClick}) => {
       <li className={css.item}>
         <button className={css.btn} type="button" onClick={() => onClick("bad")}>Bad</button>
       </li>
+      {totalFeedback > 0 && (<li className={css.item}>
+        <button className={css.btn} type="button" onClick={resetFeedback}>Reset</button>
+      </li>)}
     </ul>
   );
 };
