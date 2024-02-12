@@ -5,6 +5,11 @@
 }
 
 .item {
-    border: 1px black solid;
     border-radius: 8px;
+    margin: 20px 0;
+}
+
+.btn {
+    color: #C28251;
+    border: 1px #C28251 solid;
 }

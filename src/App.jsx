@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Description from "./components/Description/Description";
 import Feedback from "./components/Feedback/Feedback"
 
@@ -6,11 +6,21 @@ import "./App.css";
 import Options from "./components/Options/Options";
 
 const App = () => {
-  const [feedbackType, setFeedbackType] = useState({
-    good: 0,
+  const [feedbackType, setFeedbackType] = useState(() => {
+    const savedFeedback = window.localStorage.getItem("feedbackType");
+    if (savedFeedback !== null) {
+      return JSON.parse(savedFeedback);
+    }
+    return {
+      good: 0,
     neutral: 0,
     bad: 0,
+    }
   });
+
+  useEffect(() => {
+    window.localStorage.setItem("feedbackType", JSON.stringify(feedbackType))
+  }, [feedbackType])
 
   const updateFeedback = feedbackType => {
     setFeedbackType((prevState)=> ({
@@ -20,11 +30,16 @@ const App = () => {
 
   }
 
+  const totalFeedback = Number(feedbackType.good + feedbackType.neutral + feedbackType.bad);
+
+  const positiveFeedback = Math.round(((feedbackType.good + feedbackType.neutral) / totalFeedback) * 100)
+
+
   return (
-    <div>
+    <div >
       <Description />
-      <Options feedbackBtn={feedbackType} onClick={updateFeedback}/>
-      <Feedback feedbackType={feedbackType} />
+      <Options onClick={updateFeedback}/>
+      {totalFeedback ? <Feedback feedbackType={feedbackType} positiveFeedback={positiveFeedback}/> : <p>No feedback yet</p>}
     </div>
   );
 };
