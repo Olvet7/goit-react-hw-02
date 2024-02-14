@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Description from "./components/Description/Description";
 import Feedback from "./components/Feedback/Feedback";
 
+
 import "./App.css";
 import Options from "./components/Options/Options";
+import { Notification } from "./components/Notification/Notification";
 
 const App = () => {
   const [feedbackType, setFeedbackType] = useState(() => {
@@ -50,7 +52,7 @@ const App = () => {
     <div>
       <Description />
       <Options onClick={updateFeedback} resetFeedback={resetFeedback} totalFeedback={totalFeedback}/>
-      {totalFeedback ? (<Feedback feedbackType={feedbackType} positiveFeedback={positiveFeedback}/>) : (<p>No feedback yet</p>)}
+      {totalFeedback ? (<Feedback feedbackType={feedbackType} positiveFeedback={positiveFeedback}/>) : <Notification />}
     </div>
   );
 };
